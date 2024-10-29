@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class DAOProducto {
     public Producto Insertar(String nombre, String categoria, double precio,
-            String existencia) {
+            int existencia) {
         String transaccion = "INSET INTO Producto (nombres,categoria,precio,existencia) VALUES('"
                + nombre +"', '"
                + categoria  +"', '"      
@@ -23,7 +23,7 @@ public class DAOProducto {
       return null;      
 }
  public int Actualizar (int id_producto, String nombre, String categoria, double precio,
-         String existencia){
+         int existencia){
      
       String transaccion = "UPDATE Producto SET caracteristicas='"
                
@@ -45,8 +45,7 @@ public List obtenerDatos() {
                  (String) registro.get("nombre"),
                  (String) registro.get("Categoria"),
                  (double) registro.get("precio"),
-                 (String) registro.get("Existencia"));
-       
+                 (int) registro.get("Existencia"));
          productos.add(aut);  
      }
       return productos;
@@ -55,15 +54,15 @@ public List obtenerDatos() {
       public int Eliminar(int id){
        String Producto ="DELETE FROM Productos WHERE id_productos='"+ id + "'";
        return new DataBase().Actualizar(Producto);
-    
-    
-    
+      }
+      
+       
 }
     
     
     
     
-}         
+     
 
 
 

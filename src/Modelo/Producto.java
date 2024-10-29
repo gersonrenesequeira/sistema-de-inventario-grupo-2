@@ -43,33 +43,38 @@ public class Producto {
         this.precio = precio;
     }
 
-    public String getExistencia() {
+    public int getExistencia() {
         return existencia;
     }
 
-    public void setExistencia(String existencia) {
+    public void setExistencia(int existencia) {
         this.existencia = existencia;
     }
-    
-    private int id_producto; 
-    private String nombre;
-    private String categoria;
-    private double precio;
-    private String existencia;
-    
-    public Producto (int id_producto, String nombre, String categoria, double precio, String existencia) {
-      
+
+    public Producto(int id_producto, String nombre, String categoria, double precio, int existencia) {
         this.id_producto = id_producto;
         this.nombre = nombre;
         this.categoria = categoria;
         this.precio = precio;
         this.existencia = existencia;
     }
-    public Producto (String nombre, String categoria, double precio, String existencia) {
+
+    public Producto(String nombre, String categoria, double precio, int existencia) {
         this.nombre = nombre;
         this.categoria = categoria;
         this.precio = precio;
         this.existencia = existencia;
+    }
+
+
+    
+    private int id_producto; 
+    private String nombre;
+    private String categoria;
+    private double precio;
+    private int existencia;
+    
+    
         
         
     }
@@ -77,4 +82,4 @@ public class Producto {
              
          
        
-}
+

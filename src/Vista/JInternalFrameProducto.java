@@ -45,8 +45,8 @@ modelo.setColumnIdentifiers(columnas);
 for(Producto au:productos){
     String[]renglon={Integer.toString(au.getId_producto()),au.getNombre(),
     au.getCategoria(),
-    au.getprecio().toString(),
-    au.getExistencia().toString()};
+    Double.toString(au.getPrecio()),
+   Integer.toString(au.getExistencia())};
     
    modelo.addRow(renglon);
     }
@@ -383,18 +383,18 @@ jTableProductos.setModel(modelo);
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
        String nomb=jTextFieldNombre.getText();
 String cat=jTextFieldCategoria.getText();
-double prec=jTextFieldPrecio.getText();
-String exis=jTextFieldExistencia.getText();
+double prec=Double.parseDouble(jTextFieldPrecio.getText());
+int exis=Integer.parseInt(jTextFieldExistencia.getText());
 
 if(nomb.contentEquals("")|| cat.contentEquals("")||
-    prec.contentEquals("")|
+    prec.contentEquals("")| 
     exis.contentEquals("")){
      JOptionPane.showConfirmDialog(rootPane,
 "Todos los Campos son obligatorios");
 }else{
 try{
     
-Producto au=new DAOProucto().Insertar(nomb, cat , prec, exis);
+Producto au=new DAOProducto().Insertar(nomb, cat , prec, exis);
 JOptionPane.showMessageDialog(rootPane, "Registro agregado");
 }catch (Exception e){
      e.printStackTrace();
@@ -443,13 +443,13 @@ obtenerDatos();
                 String nom=(String)this.jTableProductos.getValueAt(fila,1);
                 String cat=(String)this.jTableProductos.getValueAt(fila,2);
                 double prec=(double)this.jTableProductos.getValueAt(fila,3);
-                String exis=((String)this.jTableProductos.getValueAt(fila,4).toString());
+                int exis=Integer.parseInt((String)this.jTableProductos.getValueAt(fila,4).toString());
                 
                 jTextFieldIDproducto.setText(""+id);
                 jTextFieldNombre.setText(nom);
                 jTextFieldCategoria.setText(cat);
                 jTextFieldPrecio.setText(prec);
-                jTextFieldExistencia.setText((exis));
+                jTextFieldExistencia.setText(""+exis);
             }catch(NumberFormatException e){
                 e.printStackTrace();
             }
@@ -467,9 +467,9 @@ obtenerDatos();
               
               
                 DAOProducto dao=new DAOProducto();
-                int res=dao.Actualizar(id,nom,cat,prec,exis);
+                int res=dao.Actualizar(id, nom, cat, prec ,exis );
                 if(res==1){
-                    JOptionPane.showMessageDialog(rootPane, "¡Autor Acutalizado!");
+                    JOptionPane.showMessageDialog(rootPane, "¡producto Acutalizado!");
                 }
                 else{
                     JOptionPane.showMessageDialog(rootPane, "¡Ocurrio un ERROR!");
