@@ -7,7 +7,6 @@ package Vista;
 import Modelo.*;
 import java.util.*;
 import javax.swing.table.DefaultTableModel;
-import java.sql.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JDialog;
 
@@ -381,7 +380,7 @@ jTableProductos.setModel(modelo);
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
        String nomb=jTextFieldNombre.getText();
 String cat=jTextFieldCategoria.getText();
-String prec=jTextFieldPrecio.getText();
+double prec=jTextFieldPrecio.getText();
 String exis=jTextFieldExistencia.getText();
 
 if(nomb.contentEquals("")|| cat.contentEquals("")||
@@ -421,19 +420,19 @@ obtenerDatos();
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-      int fila=this.jTableAutor.getSelectedRow();
+      int fila=this.jTableProductos.getSelectedRow();
         if(fila==-1){
             JOptionPane.showConfirmDialog(rootPane, "Seleccione un registro de la taba");
         }
         else{
             try{
-                int id=Integer.parseInt((String)this.jTableAutor.getValueAt(fila,0).toString());
-                String nom=(String)this.jTableAutor.getValueAt(fila,1);
-                String ape=(String)this.jTableAutor.getValueAt(fila,2);
-                String corr=(String)this.jTableAutor.getValueAt(fila,3);
-                String ced=(String)this.jTableAutor.getValueAt(fila,4);
-                Date fec=Date.valueOf((String)this.jTableAutor.getValueAt(fila,5).toString());
-                jTextIdAutor.setText(""+id);
+                int id=Integer.parseInt((String)this.jTableProductos.getValueAt(fila,0).toString());
+                String nom=(String)this.jTableProductos.getValueAt(fila,1);
+                String cat=(String)this.jTableProductos.getValueAt(fila,2);
+                double prec=(double)this.jTableProductos.getValueAt(fila,3);
+                String exis=(String)this.jTableProductos.getValueAt(fila,4).toString());
+                
+                jTextFieldIDproducto(""id);
                 jTextNombres.setText(nom);
                 jTextApellidos.setText(ape);
                 jTextEmail.setText(corr);
