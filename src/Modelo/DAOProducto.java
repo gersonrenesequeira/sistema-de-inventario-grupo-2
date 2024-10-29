@@ -44,7 +44,7 @@ public List obtenerDatos() {
          Producto aut = new Producto ((int) registro.get("id_Producto"),
                  (String) registro.get("nombre"),
                  (String) registro.get("Categoria"),
-                 (double) registro.get("Precio"),
+                 (double) registro.get("precio"),
                  (String) registro.get("Existencia"));
        
          productos.add(aut);  

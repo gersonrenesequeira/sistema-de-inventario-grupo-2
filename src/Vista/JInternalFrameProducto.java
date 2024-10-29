@@ -43,7 +43,9 @@ public void obtenerDatos(){
 modelo.setColumnIdentifiers(columnas);
 for(Producto au:productos){
     String[]renglon={Integer.toString(au.getId_producto()),au.getNombre(),
-    au.getCategoria(),au.getPrecio(),au.getExistencia().toString()};
+    au.getCategoria(),
+    au.getprecio().toString(),
+    au.getExistencia().toString()};
     
    modelo.addRow(renglon);
     }
