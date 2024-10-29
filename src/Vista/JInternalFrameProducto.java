@@ -4,11 +4,11 @@
  */
 package Vista;
 
-import Modelo.Producto;
-import java.util.ArrayList;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
+import Modelo.*;
+import java.util.*;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JDialog;
 
 /**
@@ -17,36 +17,43 @@ import javax.swing.JDialog;
  */
 public class JInternalFrameProducto extends javax.swing.JInternalFrame {
     /**Arreglo de objetos productos*/
-    ArrayList<Producto> listaProducto=new ArrayList<>();
-    int índice=-1;
+    
     /**
      * Creates new form JInternalFrameProducto
      */
    public JInternalFrameProducto() { 
         initComponents();
+        jTextFieldIDproducto.setEnabled(false);
     }
 private void limpiarCampos(){ //Método para limpiar cajas de texto
     //Se asigna un valor vacío a todas las cajas de texto
     //Se utiliza el nombre de variable asignado
-    this.jTextFieldNombre.setText(""); // Set es para asignar un valor
-    this.jTextFieldCategoria.setText ("");
-    this.jTextFieldPrecio.setText ("");
-    this.jTextFieldExistencia.setText ("");
+    jTextFieldIDproducto.setText(""); 
+    jTextFieldNombre.setText("");
+    jTextFieldCategoria.setText ("");
+    jTextFieldPrecio.setText ("");
+    jTextFieldExistencia.setText ("");
 }
-    private void llenarTabla(){
-      DefaultTableModel modelo = new DefaultTableModel();
-      String[] columnas = {"Nombres", "Categoría",
-            "Precio","Existencia"};
-       modelo.setColumnIdentifiers(columnas);
-        for(Producto pro: listaProducto){
-             String[] renglon = {pro.getNombre(),
-               pro.getCategoría(),Double.toString(pro.getPrecio()),
-               Integer.toString(pro.getExistencia())};
-            modelo.addRow(renglon);
-        }
-        jTableProductos.setModel(modelo);
+
+public void obtenerDatos(){
+   List<Producto> productos=new DAOProducto().obtenerDatos();
+        DefaultTableModel modelo= new DefaultTableModel();
+
+        String[] columnas={"id_Producto","Nombre","Categoria",
+                 "Precio","Existencia"};
+modelo.setColumnIdentifiers(columnas);
+for(Producto au:productos){
+    String[]renglon={Integer.toString(au.getId_producto()),au.getNombre(),
+    au.getCategoria(),au.getPrecio(),au.getExistencia().toString()};
+    
+   modelo.addRow(renglon);
+    }
+jTableProductos.setModel(modelo);
+    }
+
+   
      
-      }
+      
       
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,23 +70,30 @@ private void limpiarCampos(){ //Método para limpiar cajas de texto
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jButtonEliminar = new javax.swing.JButton();
+        jButtonActualizar = new javax.swing.JButton();
+        jButtonLimpiar = new javax.swing.JButton();
+        jButtonEditar = new javax.swing.JButton();
+        jButtonGuardar = new javax.swing.JButton();
+        jBBuscar = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jTextFieldIDproducto = new javax.swing.JTextField();
         jTextFieldNombre = new javax.swing.JTextField();
+        jTextFieldCategoria = new javax.swing.JTextField();
         jTextFieldPrecio = new javax.swing.JTextField();
         jTextFieldExistencia = new javax.swing.JTextField();
-        jButtonGuardar = new javax.swing.JButton();
-        jButtonLimpiar = new javax.swing.JButton();
-        jButtonEliminar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableProductos = new javax.swing.JTable();
-        jButtonEditar = new javax.swing.JButton();
-        jButtonActualizar = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextFieldCategoria = new javax.swing.JTextField();
 
         jMenuItem1.setText("Enviar");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -104,62 +118,11 @@ private void limpiarCampos(){ //Método para limpiar cajas de texto
         jPanel1.setForeground(new java.awt.Color(102, 204, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(51, 51, 255));
-        jLabel2.setText("Nombre");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setText("Registrar de producto");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 260, 30));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(51, 51, 255));
-        jLabel3.setText("Categoria");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, -1));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(51, 51, 255));
-        jLabel4.setText("Precio");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, -1, -1));
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(51, 51, 255));
-        jLabel5.setText("Existencia");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
-        jPanel1.add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 210, -1));
-
-        jTextFieldPrecio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldPrecioActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextFieldPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 210, -1));
-
-        jTextFieldExistencia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldExistenciaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextFieldExistencia, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, 210, -1));
-
-        jButtonGuardar.setBackground(new java.awt.Color(204, 255, 204));
-        jButtonGuardar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButtonGuardar.setForeground(new java.awt.Color(51, 51, 255));
-        jButtonGuardar.setText("Guardar");
-        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonGuardarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, -1, -1));
-
-        jButtonLimpiar.setBackground(new java.awt.Color(204, 255, 204));
-        jButtonLimpiar.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
-        jButtonLimpiar.setForeground(new java.awt.Color(51, 51, 255));
-        jButtonLimpiar.setText("Limpiar");
-        jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLimpiarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButtonLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
+        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
         jButtonEliminar.setBackground(new java.awt.Color(204, 255, 204));
         jButtonEliminar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -170,37 +133,6 @@ private void limpiarCampos(){ //Método para limpiar cajas de texto
                 jButtonEliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, -1, -1));
-
-        jTableProductos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Nombre", "Categoria", "Precio", "Existencia"
-            }
-        ));
-        jTableProductos.setComponentPopupMenu(jPopupMenu1);
-        jScrollPane1.setViewportView(jTableProductos);
-        if (jTableProductos.getColumnModel().getColumnCount() > 0) {
-            jTableProductos.getColumnModel().getColumn(3).setHeaderValue("Existencia");
-        }
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 90, 230, 160));
-
-        jButtonEditar.setBackground(new java.awt.Color(204, 255, 204));
-        jButtonEditar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButtonEditar.setForeground(new java.awt.Color(51, 51, 255));
-        jButtonEditar.setText("Editar");
-        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEditarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButtonEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, -1, -1));
 
         jButtonActualizar.setBackground(new java.awt.Color(204, 255, 204));
         jButtonActualizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -211,94 +143,263 @@ private void limpiarCampos(){ //Método para limpiar cajas de texto
                 jButtonActualizarActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, -1, -1));
 
-        jPanel3.setBackground(new java.awt.Color(204, 255, 204));
+        jButtonLimpiar.setBackground(new java.awt.Color(204, 255, 204));
+        jButtonLimpiar.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
+        jButtonLimpiar.setForeground(new java.awt.Color(51, 51, 255));
+        jButtonLimpiar.setText("Limpiar");
+        jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimpiarActionPerformed(evt);
+            }
+        });
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("Datos de producto");
+        jButtonEditar.setBackground(new java.awt.Color(204, 255, 204));
+        jButtonEditar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButtonEditar.setForeground(new java.awt.Color(51, 51, 255));
+        jButtonEditar.setText("Editar");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
+
+        jButtonGuardar.setBackground(new java.awt.Color(204, 255, 204));
+        jButtonGuardar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButtonGuardar.setForeground(new java.awt.Color(51, 51, 255));
+        jButtonGuardar.setText("Guardar");
+        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarActionPerformed(evt);
+            }
+        });
+
+        jBBuscar.setBackground(new java.awt.Color(204, 255, 204));
+        jBBuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jBBuscar.setForeground(new java.awt.Color(51, 51, 255));
+        jBBuscar.setText("Buscar");
+        jBBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(197, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(191, 191, 191))
+                .addContainerGap(18, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonGuardar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonLimpiar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButtonActualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jBBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButtonEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(16, 16, 16))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel1)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonGuardar)
+                    .addComponent(jButtonEliminar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonActualizar)
+                    .addComponent(jButtonEditar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBBuscar)
+                    .addComponent(jButtonLimpiar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 60));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 50, -1, 170));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel7.setText("Transacciones");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 0, -1, -1));
+
+        jPanel4.setBackground(new java.awt.Color(204, 204, 204));
 
         jTextFieldCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldCategoriaActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextFieldCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 210, -1));
+
+        jTextFieldPrecio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPrecioActionPerformed(evt);
+            }
+        });
+
+        jTextFieldExistencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldExistenciaActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel2.setText("ID");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel5.setText("Existencia");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel4.setText("Precio");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel3.setText("Categoria");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(51, 51, 255));
+        jLabel6.setText("Nombre");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel6)))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(jLabel2)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
+                            .addComponent(jTextFieldNombre)
+                            .addComponent(jTextFieldIDproducto)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel4))
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldPrecio)
+                            .addComponent(jTextFieldExistencia))))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldIDproducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextFieldCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextFieldExistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(49, 49, 49))
+        );
+
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 310, 180));
+
+        jTableProductos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "Nombre", "Categoria", "Precio", "Existencia"
+            }
+        ));
+        jTableProductos.setComponentPopupMenu(jPopupMenu1);
+        jScrollPane1.setViewportView(jTableProductos);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 540, 220));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 586, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
-         if((jTextFieldNombre.getText().contentEquals(""))||
-              (jTextFieldCategoria.getText().contentEquals("")) ||
-              (jTextFieldPrecio.getText().contentEquals("")) ||
-              (jTextFieldExistencia.getText().contentEquals(""))) {
-          llenarTabla();
-          
-       JOptionPane.showMessageDialog(null,
-                    "Algunos campos estan vacíos",
-                        "¡Revise todos los campos!",
-                        JOptionPane.WARNING_MESSAGE);
-                 
-            }else{    
-                //Get para obtener un valor    
-        String nombreProducto=this.jTextFieldNombre.getText();
-        String nombreCategoria=this.jTextFieldCategoria.getText();
-        //Obtiene lo que la caja de texto y convierte a tipo de dato
-        double precioProducto=Double.parseDouble(this.jTextFieldPrecio.getText());
-        int existenciaProducto=Integer.parseInt(this.jTextFieldExistencia.getText());
-                
-                
-            try{ //Bloque try (intentar) - catch (capturar) para capturar errores
-              //Declarando un objeto de la clase Producto,
-              //Crea un objeto de clase Producto
-              //LLama al método constructor de la clase Producto
-             Producto prod=new Producto(nombreProducto,nombreCategoria,
-                     precioProducto, existenciaProducto);
-             this.listaProducto.add(prod);
-               
-             this.limpiarCampos();//Llamar al método limpiar campos
-             llenarTabla();
-             
-             JOptionPane.showMessageDialog(null,
-                     "Datos agregados correctamente");
+       String nomb=jTextFieldNombre.getText();
+String cat=jTextFieldCategoria.getText();
+String prec=jTextFieldPrecio.getText();
+String exis=jTextFieldExistencia.getText();
 
-        }catch(Exception e){     
-            JOptionPane.showConfirmDialog(null,
-                    "Datos no agregados","Error",
-                    JOptionPane.ERROR_MESSAGE);
-        }      
-       }        
+if(nomb.contentEquals("")|| cat.contentEquals("")||
+    prec.contentEquals("")|
+    exis.contentEquals("")){
+     JOptionPane.showConfirmDialog(rootPane,
+"Todos los Campos son obligatorios");
+}else{
+try{
+    
+Producto au=new DAOProducto().Insertar(nomb, cat , prec, exis);
+JOptionPane.showMessageDialog(rootPane, "Registro agregado");
+}catch (Exception e){
+     e.printStackTrace();
+     JOptionPane.showMessageDialog(rootPane,"Seleccione un registro de la tabla");
+}
+}
+obtenerDatos();
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jTextFieldExistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldExistenciaActionPerformed
@@ -314,64 +415,39 @@ private void limpiarCampos(){ //Método para limpiar cajas de texto
     }//GEN-LAST:event_jButtonLimpiarActionPerformed
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
-        int fila = this.jTableProductos.getSelectedRow();
-        if (fila==-1) {
-            JOptionPane.showMessageDialog(rootPane,
-                "Seleccione un registro de la tabla");
 
-        } else {
-            JDialog.setDefaultLookAndFeelDecorated(true);
-            int resp = JOptionPane.showConfirmDialog(null,
-                "Estas seguro de eliminar?","Eliminando...",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
-            if(resp==JOptionPane.YES_NO_OPTION) {
-                listaProducto.remove(fila);
-                llenarTabla();      
-        }
-     }   
+        
+        
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
     private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
-        int fila = this.jTableProductos.getSelectedRow();
-        if (fila == -1) {
-            JOptionPane.showMessageDialog(rootPane,
-                      "Seleccione un registro de la tabla");
-        } else {
-            String nom = (String) this.jTableProductos.getValueAt(fila,0);
-            String cat = (String) this.jTableProductos.getValueAt(fila,1);
-            double prec =Double.parseDouble((String) this.jTableProductos.getValueAt(fila,2));
-            int exis =Integer.parseInt((String) this.jTableProductos.getValueAt(fila,3));
-            jTextFieldNombre.setText(nom);
-            jTextFieldCategoria.setText(cat);
-            jTextFieldPrecio.setText(String.valueOf(prec));
-            jTextFieldExistencia.setText(String.valueOf(exis));
-            índice=fila;
-            }       
+      int fila=this.jTableAutor.getSelectedRow();
+        if(fila==-1){
+            JOptionPane.showConfirmDialog(rootPane, "Seleccione un registro de la taba");
+        }
+        else{
+            try{
+                int id=Integer.parseInt((String)this.jTableAutor.getValueAt(fila,0).toString());
+                String nom=(String)this.jTableAutor.getValueAt(fila,1);
+                String ape=(String)this.jTableAutor.getValueAt(fila,2);
+                String corr=(String)this.jTableAutor.getValueAt(fila,3);
+                String ced=(String)this.jTableAutor.getValueAt(fila,4);
+                Date fec=Date.valueOf((String)this.jTableAutor.getValueAt(fila,5).toString());
+                jTextIdAutor.setText(""+id);
+                jTextNombres.setText(nom);
+                jTextApellidos.setText(ape);
+                jTextEmail.setText(corr);
+                jTextCedula.setText(ced);
+                jTextFechaNac.setText(String.valueOf(fec));
+            }catch(NumberFormatException e){
+                e.printStackTrace();
+            }
+            
+        }
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
-      if((jTextFieldNombre.getText().contentEquals(""))||
-        (jTextFieldCategoria.getText().contentEquals(""))||
-        (jTextFieldPrecio.getText().contentEquals(""))||     
-        (jTextFieldExistencia.getText().contentEquals(""))||índice==-1){
-        JOptionPane.showMessageDialog(null,
-                    "Algunos campos estan vacíos,seleccione de la tabla de datos",
-                    "Actualizar...",
-                    JOptionPane.WARNING_MESSAGE);
-        limpiarCampos();
-        
-        }else{
-          listaProducto.get(índice).setNombre(jTextFieldNombre.getText());
-          listaProducto.get(índice).setCategoría(jTextFieldCategoria.getText()); 
-          listaProducto.get(índice).setPrecio(Double.valueOf(jTextFieldPrecio.getText()));
-          listaProducto.get(índice).setExistencia
-                  (Integer.parseInt(jTextFieldExistencia.getText()));
-          llenarTabla();
-          limpiarCampos();        
-      }
-        
-        
+      
     }//GEN-LAST:event_jButtonActualizarActionPerformed
 
     private void jTextFieldCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCategoriaActionPerformed
@@ -382,7 +458,12 @@ private void limpiarCampos(){ //Método para limpiar cajas de texto
    
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jBBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBBuscarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBBuscar;
     private javax.swing.JButton jButtonActualizar;
     private javax.swing.JButton jButtonEditar;
     private javax.swing.JButton jButtonEliminar;
@@ -393,17 +474,23 @@ private void limpiarCampos(){ //Método para limpiar cajas de texto
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     public static javax.swing.JTable jTableProductos;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextFieldCategoria;
     private javax.swing.JTextField jTextFieldExistencia;
+    private javax.swing.JTextField jTextFieldIDproducto;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldPrecio;
     // End of variables declaration//GEN-END:variables

@@ -3,25 +3,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Modelo;
+import java.sql.Date;
 
 /**
  *
- * @author Gerson
+ * @author Usuario
  */
-public class Producto {   //Nombre de la clase //Inicio
-    String nombre;       //Nombre del producto tipo cadena
-    String categoría;   //Nombre de categoria tipo cadena
-    double precio;      //Nombre del producto tipo real
-    int existencia;  
+public class Producto {
 
-    public Producto() {
+    public int getId_producto() {
+        return id_producto;
     }
 
-    public Producto(String nombre, String categoría, double precio, int existencia) {
-        this.nombre = nombre;
-        this.categoría = categoría;
-        this.precio = precio;
-        this.existencia = existencia;
+    public void setId_producto(int id_producto) {
+        this.id_producto = id_producto;
     }
 
     public String getNombre() {
@@ -32,12 +27,12 @@ public class Producto {   //Nombre de la clase //Inicio
         this.nombre = nombre;
     }
 
-    public String getCategoría() {
-        return categoría;
+    public String getCategoria() {
+        return categoria;
     }
 
-    public void setCategoría(String categoría) {
-        this.categoría = categoría;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public double getPrecio() {
@@ -48,14 +43,38 @@ public class Producto {   //Nombre de la clase //Inicio
         this.precio = precio;
     }
 
-    public int getExistencia() {
+    public String getExistencia() {
         return existencia;
     }
 
-    public void setExistencia(int existencia) {
+    public void setExistencia(String existencia) {
         this.existencia = existencia;
     }
     
-}
-
+    private int id_producto; 
+    private String nombre;
+    private String categoria;
+    private double precio;
+    private String existencia;
     
+    public Producto (int id_producto, String nombre, String categoria, double precio, String existencia) {
+      
+        this.id_producto = id_producto;
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.precio = precio;
+        this.existencia = existencia;
+    }
+    public Producto (String nombre, String categoria, double precio, String existencia) {
+        this.nombre = nombre;
+        this.categoria = categoria;
+        this.precio = precio;
+        this.existencia = existencia;
+        
+        
+    }
+    
+             
+         
+       
+}
