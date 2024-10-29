@@ -391,7 +391,7 @@ if(nomb.contentEquals("")|| cat.contentEquals("")||
 }else{
 try{
     
-Producto au=new DAOProducto().Insertar(nomb, cat , prec, exis);
+Producto au=new DAOProucto().Insertar(nomb, cat , prec, exis);
 JOptionPane.showMessageDialog(rootPane, "Registro agregado");
 }catch (Exception e){
      e.printStackTrace();
@@ -415,6 +415,16 @@ obtenerDatos();
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
 
+        int fila=this.jTableProductos.getSelectedRow();
+        if(fila==1){
+            JOptionPane.showMessageDialog(rootPane, "Seleccione un registro de la tabla");
+        }
+        else{
+            int id=Integer.parseInt((String)this.jTableProductos.getValueAt(fila,0).toString());
+            DAOProducto dao=new DAOProducto();
+            dao.Eliminar(id);
+            obtenerDatos();
+        }
         
         
     }//GEN-LAST:event_jButtonEliminarActionPerformed
@@ -430,14 +440,13 @@ obtenerDatos();
                 String nom=(String)this.jTableProductos.getValueAt(fila,1);
                 String cat=(String)this.jTableProductos.getValueAt(fila,2);
                 double prec=(double)this.jTableProductos.getValueAt(fila,3);
-                String exis=(String)this.jTableProductos.getValueAt(fila,4).toString());
+                String exis=((String)this.jTableProductos.getValueAt(fila,4).toString());
                 
-                jTextFieldIDproducto(""id);
-                jTextNombres.setText(nom);
-                jTextApellidos.setText(ape);
-                jTextEmail.setText(corr);
-                jTextCedula.setText(ced);
-                jTextFechaNac.setText(String.valueOf(fec));
+                jTextFieldIDproducto.setText(""+id);
+                jTextFieldNombre.setText(nom);
+                jTextFieldCategoria.setText(cat);
+                jTextFieldPrecio.setText(prec);
+                jTextFieldExistencia.setText((exis));
             }catch(NumberFormatException e){
                 e.printStackTrace();
             }
@@ -446,7 +455,22 @@ obtenerDatos();
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
-      
+
+          int id=Integer.parseInt(this.jTextFieldIDproducto.getText());
+                String nom=this.jTextFieldNombre.getText();
+                String cat=this.jTextFieldCategoria.getText();
+                String prec=this.jTextFieldPrecio.getText();
+                String exis=(this.jTextFieldExistencia.getText());
+              
+              
+                DAOProducto dao=new DAOProducto();
+                int res=dao.Actualizar(id,nom,cat,prec,exis);
+                if(res==1){
+                    JOptionPane.showMessageDialog(rootPane, "¡Autor Acutalizado!");
+                }
+                else{
+                    JOptionPane.showMessageDialog(rootPane, "¡Ocurrio un ERROR!");
+                }      
     }//GEN-LAST:event_jButtonActualizarActionPerformed
 
     private void jTextFieldCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCategoriaActionPerformed
