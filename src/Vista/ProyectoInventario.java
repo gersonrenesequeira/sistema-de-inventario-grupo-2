@@ -4,6 +4,8 @@
  */
 package Vista;
 
+import Controlador.JFrameprincipal;
+
 /**
  *
  * @author Gerson
