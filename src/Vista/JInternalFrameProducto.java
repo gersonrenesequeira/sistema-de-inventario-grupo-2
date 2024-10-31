@@ -240,12 +240,14 @@ jTableProductos.setModel(modelo);
             }
         });
 
+        jTextFieldPrecio.setText("0");
         jTextFieldPrecio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldPrecioActionPerformed(evt);
             }
         });
 
+        jTextFieldExistencia.setText("0");
         jTextFieldExistencia.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldExistenciaActionPerformed(evt);
@@ -386,9 +388,9 @@ String cat=jTextFieldCategoria.getText();
 double prec=Double.parseDouble(jTextFieldPrecio.getText());
 int exis=Integer.parseInt(jTextFieldExistencia.getText());
 
-if(nomb.contentEquals("")|| cat.contentEquals("")||
-    prec.contentEquals("")| 
-    exis.contentEquals("")){
+if((nomb.contentEquals("")|| cat.contentEquals("")||
+    prec==0||
+    exis==0)){
      JOptionPane.showConfirmDialog(rootPane,
 "Todos los Campos son obligatorios");
 }else{
@@ -448,7 +450,7 @@ obtenerDatos();
                 jTextFieldIDproducto.setText(""+id);
                 jTextFieldNombre.setText(nom);
                 jTextFieldCategoria.setText(cat);
-                jTextFieldPrecio.setText(prec);
+                jTextFieldPrecio.setText(""+prec);
                 jTextFieldExistencia.setText(""+exis);
             }catch(NumberFormatException e){
                 e.printStackTrace();
@@ -462,8 +464,8 @@ obtenerDatos();
           int id=Integer.parseInt(this.jTextFieldIDproducto.getText());
                 String nom=this.jTextFieldNombre.getText();
                 String cat=this.jTextFieldCategoria.getText();
-                String prec=this.jTextFieldPrecio.getText();
-                String exis=(this.jTextFieldExistencia.getText());
+                double prec=Double.parseDouble ( this.jTextFieldPrecio.getText());
+                int exis=Integer.parseInt(this.jTextFieldExistencia.getText());
               
               
                 DAOProducto dao=new DAOProducto();

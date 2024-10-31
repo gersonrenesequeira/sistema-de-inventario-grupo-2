@@ -4,6 +4,7 @@
  */
 package Vista;
 
+import Controlador.JFrameprincipal;
 import java.awt.Color;
 import javax.swing.JOptionPane;
 
@@ -208,7 +209,7 @@ public class segistro extends javax.swing.JFrame {
         
         if(jTextFieldusuario1.getText().equals(Usuario)&& Pass.equals(Contraseña)){
             
-         JFrameprincipal JF=new JFrameprincipal();
+            JFrameprincipal JF=new JFrameprincipal();
          JF.setVisible(true);
          dispose();
                 
