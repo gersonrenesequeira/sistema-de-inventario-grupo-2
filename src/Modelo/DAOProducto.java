@@ -11,50 +11,57 @@ import java.util.*;
  * @author Usuario
  */
 public class DAOProducto {
-    public Producto Insertar(String nombre, String categoria, double precio,
+     //método para insertar datos a la BD
+
+    public Producto Insertar(String nombre, String categoria, Float precio,
             int existencia) {
-        String transaccion = "INSET INTO Producto (nombres,categoria,precio,existencia) VALUES('"
+        String transaccion = "INSERT INTO Producto (Nombre,Categoria,Precio,existencia) VALUES('"
                + nombre +"', '"
                + categoria  +"', '"      
                + precio     +"', '"   
-               + existencia +"', '" ;
+               + existencia +"') " ;
+        //llamar al metodo Actualizar ubicado en DataBase.java
          if (new DataBase().Actualizar(transaccion) > 0 ){
         return new Producto(nombre, categoria, precio , existencia);
     }
       return null;      
 }
- public int Actualizar (int id_producto, String nombre, String categoria, double precio,
+    //método actualizar un registro en la BD
+ public int Actualizar (int id_producto, String nombre, String categoria, float precio,
          int existencia){
      
-      String transaccion = "UPDATE Producto SET caracteristicas='"
-               
-              + nombre +"',nombres ='"
-              + categoria  +"',categoria ='"      
-              + precio     +"',precio ='"   
-              + existencia +"',existencia ='"
+      String transaccion = "UPDATE Producto SET Nombre='"
+              + nombre +"',Categoria ='"
+              + categoria+"',Precio='"      
+              + precio     +"',existencia ='"   
+              + existencia +"'WHERE ID_Producto="
               + id_producto ;
         
   return new DataBase().Actualizar(transaccion);         
  }
+  //metodo para selecionar todos los registros de la tabla 
 public List obtenerDatos() {
     
-     String transaccion = "SELEC * FROM Productos";
+     String transaccion = "SELECT * FROM producto";
+     //llamar el metodo listar de BataDase.java
      List<Map> registros = new DataBase().Listar(transaccion);
-     List<Producto> productos = new ArrayList();
+     List<Producto> productos = new ArrayList(); //arreglo de autores 
+     //ciclo que recorre cada registro y los agrega al arreglo de autores 
      for (Map registro : registros){
-         Producto aut = new Producto ((int) registro.get("id_Producto"),
-                 (String) registro.get("nombre"),
+         Producto aut = new Producto ((int) registro.get("ID_Producto"),
+                 (String) registro.get("Nombre"),
                  (String) registro.get("Categoria"),
-                 (double) registro.get("precio"),
-                 (int) registro.get("Existencia"));
+                 (Float) registro.get("Precio"),
+                 (int) registro.get("existencia"));
          productos.add(aut);  
      }
-      return productos;
+      return productos;//retorna todos los autores ubicados a la tabla de BD
      
        }
+ //elimina un registro de la tabla en la BD
       public int Eliminar(int id){
-       String Producto ="DELETE FROM Productos WHERE id_productos='"+ id + "'";
-       return new DataBase().Actualizar(Producto);
+       String producto ="DELETE FROM producto WHERE ID_Producto='"+ id + "'";
+       return new DataBase().Actualizar(producto);
       }
       
        
